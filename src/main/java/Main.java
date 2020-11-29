@@ -4,7 +4,7 @@ import baselib.JdbcInstance;
 import static java.lang.String.valueOf;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 public class Main {
   public static void main(String[] args) {
@@ -19,13 +19,16 @@ public class Main {
     db.execute("create table if not exists test (id varchar(255), name varchar(255), primary key(id))", st -> {});
 
     var selector = db.makeRecordSelector(Table.class, "select id,name from test", st -> {});
-    Function<String, String> addNew = id -> valueOf(
-        db.execute("insert into test (id, name) values(?, 'blah')", st -> st.setString(1, id)));
+    BiFunction<String, String, String> addNew = (id, name) -> valueOf(
+        db.execute("insert into test (id, name) values(?, ?)", st -> {
+          st.setString(1, id);
+          st.setString(2, name);
+        }));
 
     HttpServer.create(8080, HttpServer.of(Map.of(
-      "/", () -> "test",
-      "/get", () -> JSONBuilder.toJSON(selector.get()),
-      "/insert", () -> addNew.apply(UUID.randomUUID().toString())
+      "/", c -> "test",
+      "/get", c -> JSONBuilder.toJSON(selector.get()),
+      "/insert", c -> addNew.apply(UUID.randomUUID().toString(), c.variablePath())
     ))).start();
 
     System.out.println("Started server on port 8080");
