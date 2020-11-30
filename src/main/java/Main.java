@@ -3,6 +3,7 @@ import baselib.HttpServer.Context;
 import static baselib.JSONBuilder.toJSON;
 import static baselib.JSONReader.toRecord;
 import baselib.JdbcInstance;
+import baselib.MetricsExporter;
 import static java.lang.String.valueOf;
 import java.util.Map;
 import java.util.function.Function;
@@ -39,7 +40,11 @@ public class Main {
       "/", c -> "test",
       "/get", c -> toJSON(selector.get()),
       "/insert", c -> addNew.apply(toRecord(Table.class, c.body())),
-      "/echo", c -> c.body()
+      "/echo", c -> c.body(),
+      "/metrics", c -> {
+        c.writer(out -> MetricsExporter.DEFAULT.export(out));
+        return "";
+      }
     ));
   }
 }
