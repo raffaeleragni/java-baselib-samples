@@ -28,7 +28,8 @@ public class Main {
     HttpServer.create(8080, HttpServer.of(Map.of(
       "/", c -> "test",
       "/get", c -> JSONBuilder.toJSON(selector.get()),
-      "/insert", c -> addNew.apply(UUID.randomUUID().toString(), c.variablePath())
+      "/insert", c -> addNew.apply(UUID.randomUUID().toString(), c.variablePath()),
+      "/echo", c -> c.body()
     ))).start();
 
     System.out.println("Started server on port 8080");
