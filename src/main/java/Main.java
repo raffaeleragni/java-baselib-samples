@@ -24,8 +24,7 @@ public class Main {
 
   void runServer(Map<String, Function<Context, String>> endpoints) {
     System.setProperty("sun.net.httpserver.maxReqTime", "1000");
-
-    HttpServer.create(8080, 10, HttpServer.of(endpoints)).start();
+    HttpServer.create(8080, 10, endpoints).start();
     System.out.println("Started server on port 8080");
   }
 
