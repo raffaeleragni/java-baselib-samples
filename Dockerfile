@@ -1,4 +1,4 @@
-FROM openjdk:15
+FROM adoptopenjdk/openjdk15-openj9:alpine
 
 RUN mkdir /app && mkdir /app/lib
 WORKDIR /app
@@ -6,7 +6,7 @@ WORKDIR /app
 EXPOSE 8080
 HEALTHCHECK CMD curl -k --fail https://localhost:8080 || exit 1
 CMD java --enable-preview \
-  -XX:MaxRAMPercentage=80 \
+  -Xmx8m \
   -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=127.0.0.1:9999\
   -jar app.jar
 
