@@ -1,3 +1,4 @@
+import baselib.FSKV;
 import baselib.HttpServer;
 import baselib.HttpServer.Context;
 import static baselib.JSONBuilder.toJSON;
@@ -5,6 +6,7 @@ import static baselib.JSONReader.toRecord;
 import baselib.JdbcInstance;
 import baselib.MetricsExporter;
 import static java.lang.String.valueOf;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -29,6 +31,7 @@ public class Main {
   }
 
   void main() {
+    var kv = new FSKV<Table>(Paths.get("tempdir"), Table.class);
     var db = prepareDB();
     var selector = db.makeRecordSelector(Table.class, "select id,name from test", st -> {});
     Function<Table, String> addNew = t -> valueOf(
@@ -44,6 +47,11 @@ public class Main {
       "/echo", c -> c.body(),
       "/metrics", c -> {
         c.writer(out -> MetricsExporter.DEFAULT.export(out));
+        return "";
+      },
+      "/kv/get", c -> toJSON(kv.get(c.variablePath())),
+      "/kv/put", c -> {
+        kv.put(c.variablePath(), toRecord(Table.class, c.body()));
         return "";
       }
     ));
