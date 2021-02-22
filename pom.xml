@@ -7,8 +7,8 @@
   <packaging>jar</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>15</maven.compiler.source>
-    <maven.compiler.target>15</maven.compiler.target>
+    <maven.compiler.source>16</maven.compiler.source>
+    <maven.compiler.target>16</maven.compiler.target>
   </properties>
   <build>
     <plugins>
@@ -17,18 +17,19 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <compilerArgs>
-            <arg>--enable-preview</arg>
-          </compilerArgs>
+            <annotationProcessorPaths>
+                <path>
+                    <groupId>com.google.dagger</groupId>
+                    <artifactId>dagger-compiler</artifactId>
+                    <version>2.32</version>
+                </path>
+            </annotationProcessorPaths>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.2</version>
-        <configuration>
-          <argLine>--enable-preview</argLine>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -36,9 +37,6 @@
         <version>3.0.0</version>
         <configuration>
           <mainClass>Main</mainClass>
-          <arguments>
-            <argument>--enable-preview</argument>
-          </arguments>
         </configuration>
       </plugin>
       <plugin>
@@ -82,9 +80,26 @@
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
+        <groupId>com.google.dagger</groupId>
+        <artifactId>dagger</artifactId>
+        <version>2.32</version>
+    </dependency>
+    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>1.4.200</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-core</artifactId>
+      <version>1.27</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-generator-annprocess</artifactId>
+      <version>1.27</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>
