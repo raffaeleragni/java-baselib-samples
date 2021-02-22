@@ -1,5 +1,6 @@
 package benchmarks;
 
+import main.Application;
 import org.openjdk.jmh.annotations.Benchmark;
 
 public class MainBenchmark {
@@ -9,5 +10,6 @@ public class MainBenchmark {
 
   @Benchmark
   public void runConstr() {
+    Application.createServer();
   }
 }
