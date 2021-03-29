@@ -41,7 +41,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>
-          <mainClass>Main</mainClass>
+          <mainClass>main.Application</mainClass>
         </configuration>
       </plugin>
       <plugin>
@@ -71,7 +71,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>Main</mainClass>
+              <mainClass>main.Application</mainClass>
             </manifest>
           </archive>
         </configuration>

@@ -1,10 +1,10 @@
 package main;
 
-import baselib.FSKV;
-import baselib.HttpServer.Context;
-import static baselib.JSONBuilder.toJSON;
-import static baselib.JSONReader.toRecord;
-import baselib.MetricsExporter;
+import baselib.storage.FSKV;
+import baselib.http.HttpServer.Context;
+import static baselib.json.JSONBuilder.toJSON;
+import static baselib.json.JSONReader.toRecord;
+import baselib.metrics.MetricsExporter;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import dagger.multibindings.StringKey;

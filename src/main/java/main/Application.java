@@ -1,6 +1,6 @@
 package main;
 
-import baselib.HttpServer;
+import baselib.http.HttpServer;
 import dagger.Component;
 
 @Component(modules = {AppConfig.class, Endpoints.class})
@@ -11,9 +11,9 @@ public interface Application {
   }
 
   public static void main(String[] args) {
-    var ns = System.currentTimeMillis();
+    var ms = System.currentTimeMillis();
     createServer().start();
-    ns = System.currentTimeMillis() - ns;
-    System.out.println("Started on port 8080 in "+ns+"ms");
+    ms = System.currentTimeMillis() - ms;
+    System.out.println("Started on port 8080 in "+ms+"ms");
   }
 }

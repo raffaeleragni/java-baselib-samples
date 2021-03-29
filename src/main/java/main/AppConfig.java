@@ -1,9 +1,9 @@
 package main;
 
 import static baselib.ExceptionWrapper.ex;
-import baselib.FSKV;
-import baselib.HttpServer;
-import baselib.JdbcInstance;
+import baselib.storage.FSKV;
+import baselib.http.HttpServer;
+import baselib.jdbc.JdbcInstance;
 import dagger.Provides;
 import static java.lang.String.valueOf;
 import java.nio.file.Paths;
