@@ -14,11 +14,6 @@ import java.util.function.Supplier;
 @dagger.Module
 public class Endpoints {
 
-  @Provides @IntoMap @StringKey("/")
-  public Function<Context, String> rootEndpoint() {
-    return c -> "default 404";
-  }
-
   @Provides @IntoMap @StringKey("/table-get")
   public Function<Context, String> tableGet(Supplier<List<Table>> selector) {
     return c -> toJSON(selector.get());
