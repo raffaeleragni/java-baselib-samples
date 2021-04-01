@@ -4,7 +4,6 @@ import baselib.storage.FSKV;
 import baselib.http.HttpServer.Context;
 import static baselib.json.JSONBuilder.toJSON;
 import static baselib.json.JSONReader.toRecord;
-import baselib.metrics.MetricsExporter;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import dagger.multibindings.StringKey;
@@ -38,14 +37,6 @@ public class Endpoints {
   @Provides @IntoMap @StringKey("/echo-path")
   public Function<Context, String> echoPath() {
     return c -> c.variablePath();
-  }
-
-  @Provides @IntoMap @StringKey("/metrics")
-  public Function<Context, String> metrics() {
-    return c -> {
-      c.writer(out -> MetricsExporter.DEFAULT.export(out));
-      return "";
-    };
   }
 
   @Provides @IntoMap @StringKey("/kv-get")
