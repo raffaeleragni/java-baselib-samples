@@ -14,3 +14,7 @@ services:
     ports: ["3000:3000"]
   app:
     build: .
+  wiremock:
+    image: rodolpheche/wiremock
+    volumes:
+      - ./conf/wiremock:/home/wiremock

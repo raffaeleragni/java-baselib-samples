@@ -1,5 +1,6 @@
 package main;
 
+import static baselib.http.HttpClient.get;
 import baselib.storage.FSKV;
 import baselib.http.HttpServer.Context;
 import static baselib.json.JSONBuilder.toJSON;
@@ -45,5 +46,10 @@ public class Endpoints {
       kv.put(c.variablePath(), toRecord(Table.class, c.body()));
       return "";
     };
+  }
+
+  @Provides @IntoMap @StringKey("/clientcall")
+  public Function<Context, String> clientcall(FSKV<Table> kv) {
+    return c -> get("http://wiremock:8080/").body();
   }
 }
